@@ -3,9 +3,19 @@
 //
 
 #include "MarketSimulator.h"
-#include <memory>
+#include "company.h"
 
+void MarketSimulator::createCompanies(std::unordered_map<std::string, company> &comps, std::vector <std::string> &comp ){
+    for (int i = 0; i < comp.size(); i++) {
+        comp.push_back("--------------------");
+        build(comp[i], comps);
+    }
+}
 
+MarketSimulator::MarketSimulator(std::unordered_map<std::string, company> comps_r,  std::vector<std::string> comp_r)
+    :companies{comps_r}, comps{comp_r} {
+    createCompanies(companies, comps);
+}
 void MarketSimulator::addOrder(const std::string& StockID, int quantity, double price, OrderType orderType,  Account &acc) {
     if (orderType == OrderType::BUY) {
         std::shared_ptr<BuyOrder> temp = std::make_shared<BuyOrder>(acc.userID, StockID, price, quantity, nextOrderID_Buy++); //CHECK

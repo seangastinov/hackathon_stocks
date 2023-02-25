@@ -3,7 +3,6 @@
 //
 #define stringify( name ) # name
 #include "Execution.h"
-
 #include <utility>
 Execution::Execution(const std::string& executionID, std::string stockID, double executionPrice, int executionQuantity)
         : executionID{"DONE-"+executionID}, executionQuantity{executionQuantity}, executionPrice{executionPrice}, stockID{std::move(stockID)}{
