@@ -4,26 +4,33 @@
 
 #include "MarketSimulator.h"
 #include <memory>
-void MarketSimulator::addOrder(const std::string& StockID, int quantity, double price, OrderType orderType) {
+
+
+void MarketSimulator::addOrder(const std::string& StockID, int quantity, double price, OrderType orderType,  Account &acc) {
     if (orderType == OrderType::BUY) {
-        std::unique_ptr<BuyOrder> temp = std::make_unique<BuyOrder>(nextOrderID_Buy++, StockID, price, quantity); //CHECK
-        buy_orders.push_back(std::move(*temp));
+        std::shared_ptr<BuyOrder> temp = std::make_shared<BuyOrder>(acc.userID, StockID, price, quantity, nextOrderID_Buy++); //CHECK
+        buy_orders.push_back(temp);
+        acc.addBuy(temp);
         std::cout << "Generated Buy Order - " << *temp << std::endl;
     } else if (orderType == OrderType::SELL) {
-        std::unique_ptr<SellOrder> temp = std::make_unique<SellOrder>(nextOrderID_Sell++, StockID, price, quantity);
-        sell_orders.push_back(std::move(*temp));
+        std::shared_ptr<SellOrder> temp = std::make_shared<SellOrder>(acc.userID, StockID, price, quantity, nextOrderID_Buy++);
+        sell_orders.push_back(temp);
+        acc.addSell(temp);
         std::cout << "Generated Sell Order - " << *temp << std::endl;
     }
 }
 
 void MarketSimulator::addExecution(int quantity, double price, BuyOrder &buyOrder, SellOrder &sellOrder) {
     std::string ExecutionID = std::to_string(nextExecutionID++);
-    std::unique_ptr<Execution> temp_buy = std::make_unique<Execution>(ExecutionID, quantity, price, buyOrder.getStockID(), buyOrder.getOrderID());
+    std::unique_ptr<Execution> temp_buy = std::make_unique<Execution>(ExecutionID,buyOrder.getStockID(), price, quantity );
     std::cout<< "Generated Execution BUY - " << *temp_buy << std::endl;
     executions.push_back(std::move(*temp_buy));
-    std::unique_ptr<Execution> temp_sell = std::make_unique<Execution>(ExecutionID, quantity, price, sellOrder.getStockID(), sellOrder.getOrderID());
+    buy_orders.erase(buy_orders.begin()+ buyOrder.getOrderID());
+    std::unique_ptr<Execution> temp_sell = std::make_unique<Execution>(ExecutionID,buyOrder.getStockID(), price, quantity);
     std::cout<< "Generated Execution SELL - " << *temp_sell << std::endl;
     executions.push_back(std::move(*temp_sell));
+    buy_orders.erase(buy_orders.begin()+ buyOrder.getOrderID());
+
 }
 
 

@@ -8,11 +8,11 @@
 
 class BuyOrder: public Order {
 private:
-    constexpr static const OrderType def_orderType = OrderType::BUY;
+    constexpr static const OrderType def_orderType =BUY;
 protected:
-    OrderType orderType;
+    OrderType orderType = def_orderType;
 public:
-    BuyOrder(int orderID, std::string stockID, double orderPrice, int orderQuantity,OrderType orderType = def_orderType);
+    BuyOrder(int userID, const std::string& stockID, double orderPrice, int orderQuantity, int orderID);
     OrderType getOrderType() override;
     void print(std::ostream &os) const override;
     ~BuyOrder() override= default;

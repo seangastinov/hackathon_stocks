@@ -16,13 +16,14 @@ class Order: public I_Printable {
 protected:
     int orderID;
     int orderQuantity;
+    int userID;
     std::string stockID;
     double orderPrice;
 public:
-    Order(int orderID, std::string stockID, double orderPrice, int orderQuantity); //constructor
+    Order(int userID, std::string stockID, double orderPrice, int orderQuantity, int orderID); //constructor
     //Order(const Order &source); //copy constructor idk perlu ato ga just in case
-    int getOrderID() const;
     int getOrderQuantity();
+    int getOrderID() const;
     double getOrderPrice() const;
     std::string getStockID();
     virtual OrderType getOrderType()=0;

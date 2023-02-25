@@ -15,12 +15,11 @@ protected:
     std::string executionID;
     int executionQuantity;
     double executionPrice;
-    int orderID;
     std::string stockID;
 public:
-    Execution(const std::string& executionID, int executionQuantity, double executionPrice,std::string stockID, int orderID);
+    Execution(const std::string& executionID, std::string stockID, double executionPrice, int executionQuantity);
     std::string getStockID() const;
-    std::string getOrderID() const;
+    std::string getexecutionID() const;
     void print(std::ostream &os) const override;
     ~Execution() override =default;
 };
