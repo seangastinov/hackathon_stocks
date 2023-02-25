@@ -3,10 +3,11 @@
 //
 
 #include "SellOrder.h"
+#include "Account.h"
 
 #include <utility>
-SellOrder::SellOrder(int orderID, std::string stockID, double orderPrice, int orderQuantity)
-        : Order(orderID, std::move(stockID), orderPrice, orderQuantity) {
+SellOrder::SellOrder(Account &acc, std::string stockID, double orderPrice, int orderQuantity)
+        : Order(std::move(stockID), orderPrice, orderQuantity), Account (acc) {
 }
 
 OrderType SellOrder::getOrderType() {
@@ -16,7 +17,7 @@ OrderType SellOrder::getOrderType() {
 void SellOrder::print(std::ostream &os) const {
     os.precision(2);
     os << std::fixed;
-    os << "Order ID: " << orderID << std::endl;
+    os << "User ID: " << userID << std::endl;
     os << "Stock ID: " << stockID << std::endl;
     os << "Order Price: " << orderPrice << std::endl;
     os << "Order Quantity: " << orderQuantity << std::endl;

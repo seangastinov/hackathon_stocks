@@ -5,15 +5,18 @@
 #ifndef HACKATHON_STOCKS_BUYORDER_H
 #define HACKATHON_STOCKS_BUYORDER_H
 #include "Order.h"
+#include "Account.h"
 
 class BuyOrder: public Order {
+    friend class MarketSimulator;
 private:
     constexpr static const OrderType def_orderType =BUY;
 protected:
     OrderType orderType = def_orderType;
 public:
-    BuyOrder(int orderID, std::string stockID, double orderPrice, int orderQuantity);
+    BuyOrder(int userID, std::string stockID, double orderPrice, int orderQuantity);
     OrderType getOrderType() override;
+    int getUserID() override;
     void print(std::ostream &os) const override;
     ~BuyOrder() override= default;
 };

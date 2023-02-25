@@ -8,20 +8,21 @@
 #include <vector>
 #include <iostream>
 #include "I_Printable.h"
+#include "Account.h"
 
 enum OrderType {BUY, SELL};
 static const std::string orderTypeStrings[] = {"BUY", "SELL"};
 
 class Order: public I_Printable {
 protected:
-    int orderID;
+
     int orderQuantity;
     std::string stockID;
     double orderPrice;
 public:
-    Order(int orderID, std::string stockID, double orderPrice, int orderQuantity); //constructor
+    Order(std::string stockID, double orderPrice, int orderQuantity); //constructor
     //Order(const Order &source); //copy constructor idk perlu ato ga just in case
-    int getOrderID() const;
+    virtual int getUserID()=0;
     int getOrderQuantity();
     double getOrderPrice() const;
     std::string getStockID();
