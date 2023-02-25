@@ -5,8 +5,8 @@
 #include "BuyOrder.h"
 
 #include <utility>
-BuyOrder::BuyOrder(int orderID, std::string stockID, double orderPrice, int orderQuantity, OrderType orderType)
-        : Order(orderID, std::move(stockID), orderPrice, orderQuantity), orderType{orderType} {
+BuyOrder::BuyOrder(int orderID, std::string stockID, double orderPrice, int orderQuantity)
+        : Order(orderID, std::move(stockID), orderPrice, orderQuantity){
 }
 
 OrderType BuyOrder::getOrderType() {

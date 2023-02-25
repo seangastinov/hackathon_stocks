@@ -10,9 +10,9 @@ class SellOrder: public Order {
 private:
     constexpr static const OrderType def_orderType = SELL;
 protected:
-    OrderType orderType;
+    OrderType orderType = def_orderType;
 public:
-    SellOrder(int orderID, std::string stockID, double orderPrice, int orderQuantity,OrderType orderType = def_orderType);
+    SellOrder(int orderID, std::string stockID, double orderPrice, int orderQuantity);
     OrderType getOrderType() override;
     void print(std::ostream &os) const override;
     virtual ~SellOrder() = default;
