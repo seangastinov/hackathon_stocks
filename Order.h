@@ -26,6 +26,7 @@ public:
     int getOrderID() const;
     double getOrderPrice() const;
     std::string getStockID();
+    void changeOrderID(int newOrderID);
     virtual OrderType getOrderType()=0;
     void print(std::ostream &os) const override;
     ~Order() override =default;

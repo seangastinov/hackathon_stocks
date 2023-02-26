@@ -13,6 +13,7 @@ OrderType SellOrder::getOrderType() {
     return orderType;
 }
 
+
 void SellOrder::print(std::ostream &os) const {
     os.precision(2);
     os << std::fixed;

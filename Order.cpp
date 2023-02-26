@@ -22,6 +22,9 @@ double Order::getOrderPrice() const{
     return orderPrice;
 }
 
+void Order::changeOrderID(int newOrderID){
+    orderID = newOrderID;
+}
 std::string Order::getStockID() {
     return stockID;
 }

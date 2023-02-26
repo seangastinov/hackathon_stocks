@@ -14,6 +14,8 @@
 #include "Account.h"
 #include <unordered_map>
 #include <queue>
+#include "pricelotbuy.h"
+#include "pricelotsell.h"
 
 class Account;
 struct company;
@@ -30,13 +32,24 @@ protected:
     std::vector<std::string> comps;
 
 public:
-    MarketSimulator(std::unordered_map<std::string, company> comps_r,  std::vector<std::string> comp_r);
+    MarketSimulator();
+    void build(std::string name, std::unordered_map<std::string, company> &companies);
     void createCompanies(std::unordered_map<std::string, company> &comps, std::vector <std::string> &comp );
     void addOrder(const std::string& StockID, int quantity, double price, OrderType orderType,  Account &acc);
     void addExecution(int quantity, double price, BuyOrder &buyOrder, SellOrder &sellOrder);
-    void matchingExecutions(std::vector<BuyOrder> &buy_orders, std::vector<SellOrder> &sell_orders);
-
+    std::unordered_map<std::string, company> getCompanies();
+    void matchingExecutions(int orderTypeInt, double price, int lotAmt, std::string compID);
 };
 
+struct company{
+    std::priority_queue<pricelotbuy> buy;
+    std::priority_queue<pricelotsell> sell;
+    std::priority_queue<pricelotbuy> getQueueBuy() const {
+        return buy;
+    }
+    std::priority_queue<pricelotsell> getQueueSell() const{
+        return sell;
+    }
 
+};
 #endif //HACKATHON_STOCKS_MARKETSIMULATOR_H

@@ -19,8 +19,5 @@ class pricelotsell{
             return this->price > p2.price;
         }
     }
-    int getOrderID_lotsell()const{
-        return orderID;
-    }
 };
 #endif //HACKATHON_STOCKS_PRICELOTSELL_H

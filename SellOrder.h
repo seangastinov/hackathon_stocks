@@ -15,6 +15,7 @@ public:
     SellOrder(int userID, const std::string& stockID, double orderPrice, int orderQuantity, int orderID);
     OrderType getOrderType() override;
     void print(std::ostream &os) const override;
+    int changeOrderID(int newOrderID);
     virtual ~SellOrder() = default;
 };
 
