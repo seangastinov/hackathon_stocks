@@ -7,19 +7,21 @@
 #include <string>
 #include <iostream>
 #include "Order.h"
+#include "BuyOrder.h"
+#include "SellOrder.h"
 #include "I_Printable.h"
 
 class Execution: public I_Printable {
-friend class Order;
+friend class BuyOrder;
 protected:
-    std::string executionID;
+    int executionID{};
     int executionQuantity;
-    double executionPrice;
     std::string stockID;
+    double profit;
 public:
-    Execution(const std::string& executionID, std::string stockID, double executionPrice, int executionQuantity);
+    Execution(const BuyOrder& buyOrder, const SellOrder& sellOrder, int executionQuantity, int executionID);
     std::string getStockID() const;
-    std::string getexecutionID() const;
+    int getexecutionID() const;
     void print(std::ostream &os) const override;
     ~Execution() override =default;
 };

@@ -7,8 +7,9 @@
 #include <utility>
 
 Order::Order(int userID, std::string stockID, double orderPrice, int orderQuantity, int orderID)
-        :stockID(std::move(stockID)), orderQuantity{orderQuantity}, orderPrice{orderPrice} {
+        :stockID(std::move(stockID)), orderQuantity{orderQuantity}, orderPrice{orderPrice},userID{userID}, orderID{orderID} {
 }
+
 
 
 int Order::getOrderQuantity(){
@@ -22,14 +23,13 @@ double Order::getOrderPrice() const{
     return orderPrice;
 }
 
-void Order::changeOrderID(int newOrderID){
-    orderID = newOrderID;
-}
-std::string Order::getStockID() {
+std::string Order::getStockID() const {
     return stockID;
 }
 
-
+void Order::changeOrderQuantity(int newQuantity) {
+    orderQuantity = newQuantity;
+}
 
 void Order::print(std::ostream &os) const {
     os.precision(2);

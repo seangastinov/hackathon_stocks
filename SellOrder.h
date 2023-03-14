@@ -5,6 +5,7 @@
 #ifndef HACKATHON_STOCKS_SELLORDER_H
 #define HACKATHON_STOCKS_SELLORDER_H
 #include "Order.h"
+#include "Account.h
 
 class SellOrder: public Order {
 private:
@@ -12,10 +13,10 @@ private:
 protected:
     OrderType orderType = def_orderType;
 public:
+    bool operator<(const Order &rhs) const;
     SellOrder(int userID, const std::string& stockID, double orderPrice, int orderQuantity, int orderID);
     OrderType getOrderType() override;
     void print(std::ostream &os) const override;
-    int changeOrderID(int newOrderID);
     virtual ~SellOrder() = default;
 };
 

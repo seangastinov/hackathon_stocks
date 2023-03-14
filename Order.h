@@ -8,10 +8,10 @@
 #include <vector>
 #include <iostream>
 #include "I_Printable.h"
+#include "Account.h"
 
 enum OrderType {BUY, SELL};
 static const std::string orderTypeStrings[] = {"BUY", "SELL"};
-
 class Order: public I_Printable {
 protected:
     int orderID;
@@ -21,12 +21,13 @@ protected:
     double orderPrice;
 public:
     Order(int userID, std::string stockID, double orderPrice, int orderQuantity, int orderID); //constructor
+
     //Order(const Order &source); //copy constructor idk perlu ato ga just in case
     int getOrderQuantity();
     int getOrderID() const;
     double getOrderPrice() const;
-    std::string getStockID();
-    void changeOrderID(int newOrderID);
+    void changeOrderQuantity(int newQuantity);
+    std::string getStockID() const;
     virtual OrderType getOrderType()=0;
     void print(std::ostream &os) const override;
     ~Order() override =default;
