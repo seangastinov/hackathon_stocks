@@ -15,6 +15,9 @@ void Account::addBuy(const std::shared_ptr<BuyOrder>& buy_order) {
 void Account::addSell(const std::shared_ptr<SellOrder>& sell_order) {
     sell_log.emplace_back(sell_order);
 }
+std::string Account::getUsername() const {
+    return userName;
+}
 
 int Account::getUserID() const {
     return userID;

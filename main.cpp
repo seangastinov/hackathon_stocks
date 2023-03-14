@@ -2,6 +2,9 @@
 #include "Order.h"
 #include "MarketSimulator.h"
 #include "Account.h"
+#include "SellOrder.h"
+#include <memory>
+#include "BuyOrder.h"
 using namespace std;
 
 int main() {
@@ -22,6 +25,7 @@ int main() {
     cout << Fio;
     Fio.updateOrder();
     cout << Sean;
-    Sean.updateOrder();
+
+
     return 0;
 }

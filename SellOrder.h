@@ -5,19 +5,23 @@
 #ifndef HACKATHON_STOCKS_SELLORDER_H
 #define HACKATHON_STOCKS_SELLORDER_H
 #include "Order.h"
-#include "Account.h
+#include "Account.h"
 
-class SellOrder: public Order {
+class SellOrder: public Order{
 private:
     constexpr static const OrderType def_orderType = SELL;
 protected:
     OrderType orderType = def_orderType;
 public:
+    SellOrder(Account &acc,const std::string& stockID, double orderPrice, int orderQuantity, int orderID);
     bool operator<(const Order &rhs) const;
-    SellOrder(int userID, const std::string& stockID, double orderPrice, int orderQuantity, int orderID);
     OrderType getOrderType() override;
     void print(std::ostream &os) const override;
-    virtual ~SellOrder() = default;
+
+//    double getOrderPrice() const override;
+
+
+    ~SellOrder() override = default;
 };
 
 

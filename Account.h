@@ -14,6 +14,7 @@
 #include "SellOrder.h"
 
 class Account : public I_Printable{
+    friend Order;
     protected:
     int userID;
     std::string userName;
@@ -21,13 +22,13 @@ class Account : public I_Printable{
     std::vector<std::weak_ptr<SellOrder>> sell_log;
 
     public:
-
     Account(int userID, std::string userName);
     void addBuy (const std::shared_ptr<BuyOrder>& buy_order);
     void addSell (const std::shared_ptr<SellOrder>& sell_order);
     int getUserID() const;
     void print(std::ostream &os) const override;
     void updateOrder();
+    std::string getUsername() const;
     ~Account() override = default;
 };
 
