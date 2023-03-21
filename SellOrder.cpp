@@ -6,7 +6,8 @@
 
 #include <utility>
 SellOrder::SellOrder(int userID, const std::string& stockID, double orderPrice, int orderQuantity, int orderID)
-        : Order(userID, stockID, orderPrice, orderQuantity, orderID){
+        : Order(userID, stockID, orderPrice, orderQuantity, orderID), acc(1,"Ssd"){
+
 }
 
 bool SellOrder::operator<(const Order &rhs) const {

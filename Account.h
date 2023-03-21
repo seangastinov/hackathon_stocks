@@ -9,11 +9,13 @@
 #include <iostream>
 #include <vector>
 #include <memory>
-#include "Order.h"
-#include "BuyOrder.h"
-#include "SellOrder.h"
+
+class BuyOrder;
+class SellOrder;
 
 class Account : public I_Printable{
+    friend class BuyOrder;
+    friend class SellOrder;
     protected:
     int userID;
     std::string userName;

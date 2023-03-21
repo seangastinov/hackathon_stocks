@@ -6,6 +6,8 @@
 #include <memory>
 #include <utility>
 #include <algorithm>
+#include "BuyOrder.h"
+#include "SellOrder.h"
 Account::Account(int userID,std::string name)
     : userID(userID), userName(std::move(name)) {}
 

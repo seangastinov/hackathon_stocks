@@ -23,7 +23,7 @@ public:
     BuyOrder& getTopBuy() const;
     SellOrder& getTopSell() const;
     void addBuy(const std::shared_ptr<BuyOrder>& BuyOrder);
-    void addSell(const std::shared_ptr<SellOrder>&  SellOrder);
+    void addSell(const std::shared_ptr<SellOrder>& SellOrder);
     void poppedBuy();
     void poppedSell();
 };

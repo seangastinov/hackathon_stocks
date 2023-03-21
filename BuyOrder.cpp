@@ -6,7 +6,7 @@
 
 #include <utility>
 BuyOrder::BuyOrder(int userID,const std::string stockID, double orderPrice, int orderQuantity, int orderID)
-        : Order(userID, stockID, orderPrice, orderQuantity, orderID){
+        : Order(userID, stockID, orderPrice, orderQuantity, orderID), acc(1,"Ssd"){
 }
 bool BuyOrder::operator<(const Order &rhs) const {
     if (this->orderPrice < rhs.getOrderPrice()){
