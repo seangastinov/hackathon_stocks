@@ -8,17 +8,18 @@
 #include "Account.h"
 
 class BuyOrder: public Order{
+
     friend class Account;
 private:
-
     constexpr static const OrderType def_orderType =BUY;
 protected:
     OrderType orderType = def_orderType;
-    Account acc;
+    Account &acc;
 public:
-    BuyOrder(int userID,const std::string stockID, double orderPrice, int orderQuantity, int orderID);
+    BuyOrder(Account &acc,const std::string stockID, double orderPrice, int orderQuantity, int orderID);
     bool operator<(const Order &rhs) const;
     OrderType getOrderType() override;
+    Account& getAccount() const;
     void print(std::ostream &os) const override;
     ~BuyOrder() override= default;
 };

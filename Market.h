@@ -6,14 +6,22 @@
 #define HACKATHON_STOCKS_MARKET_H
 #include <string>
 #include <queue>
+#include "Order.h"
 #include "BuyOrder.h"
 #include "SellOrder.h"
 #include <memory>
 
+struct ptr_less {
+    template<class T>
+    bool operator()(const T& left, const T& right) const {
+        return ((*left) <( *right));
+    }
+};
+
 class Market {
     std::string stockID;
-    std::priority_queue<std::shared_ptr<BuyOrder>> buy;
-    std::priority_queue<std::shared_ptr<SellOrder>> sell;
+    std::priority_queue<std::shared_ptr<BuyOrder>, std::vector<std::shared_ptr<BuyOrder>>, ptr_less> buy;
+    std::priority_queue<std::shared_ptr<SellOrder>, std::vector<std::shared_ptr<SellOrder>>, ptr_less> sell;
 public:
     Market() = default;
     Market(std::string stockID);

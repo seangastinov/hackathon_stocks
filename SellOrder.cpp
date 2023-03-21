@@ -5,8 +5,8 @@
 #include "SellOrder.h"
 
 #include <utility>
-SellOrder::SellOrder(int userID, const std::string& stockID, double orderPrice, int orderQuantity, int orderID)
-        : Order(userID, stockID, orderPrice, orderQuantity, orderID), acc(1,"Ssd"){
+SellOrder::SellOrder(Account &acc, const std::string& stockID, double orderPrice, int orderQuantity, int orderID)
+        : Order(acc.getUserID(), stockID, orderPrice, orderQuantity, orderID), acc(acc){
 
 }
 
@@ -20,6 +20,9 @@ OrderType SellOrder::getOrderType() {
     return orderType;
 }
 
+Account& SellOrder::getAccount() const {
+    return acc;
+}
 
 void SellOrder::print(std::ostream &os) const {
     os.precision(2);

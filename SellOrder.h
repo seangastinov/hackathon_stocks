@@ -13,12 +13,13 @@ private:
     constexpr static const OrderType def_orderType = SELL;
 protected:
     OrderType orderType = def_orderType;
-    Account acc;
+    Account &acc;
 
 public:
     bool operator<(const Order &rhs) const;
-    SellOrder(int userID, const std::string& stockID, double orderPrice, int orderQuantity, int orderID);
+    SellOrder(Account &acc, const std::string& stockID, double orderPrice, int orderQuantity, int orderID);
     OrderType getOrderType() override;
+    Account& getAccount() const;
     void print(std::ostream &os) const override;
     virtual ~SellOrder() = default;
 };

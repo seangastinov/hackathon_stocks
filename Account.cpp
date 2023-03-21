@@ -32,22 +32,30 @@ void Account::print(std::ostream &os) const {
     os << "User ID: " << userID << std::endl;
     os << "User Name: " << userName << std::endl;
     os << "Current Buy Orders: " << std::endl;
+    if (buy_log.empty()) {
+        os << "No Buy Orders" << std::endl;
+    }
     for (auto const& buy_pend : buy_log) {
         auto buy_order = buy_pend.lock();
         if (buy_order) {
-            os << buy_order->getOrderID()<< " ";
-            os << buy_order->getOrderPrice() << " ";
-            os << buy_order->getOrderQuantity() << " " << "BUY";
+            os << "Order ID:"<< buy_order->getOrderID()<< " ";
+            os << "Stock ID:" << buy_order->getStockID() << " ";
+            os << "Price:"<< buy_order->getOrderPrice() << " ";
+            os << "Quantity:" << buy_order->getOrderQuantity() << " Type:BUY";
             os << std::endl;
         }
     }
     os << "Current Sell Orders: " << std::endl;
+    if (sell_log.empty()) {
+        os << "No Sell Orders" << std::endl;
+    }
     for (auto const& sell_pend : sell_log) {
         auto sell_order = sell_pend.lock();
         if (sell_order) {
-            os << sell_order->getStockID() << " ";
-            os << sell_order->getOrderPrice() << " ";
-            os << sell_order->getOrderQuantity() << " " << "SELL";
+            os << "Order ID:"<< sell_order->getOrderID()<< " ";
+            os << "Stock ID:" << sell_order->getStockID() << " ";
+            os << "Price:" << sell_order->getOrderPrice() << " ";
+            os << "Quantity:"<< sell_order->getOrderQuantity() << " Type:SELL";
             os << std::endl;
         }
     }

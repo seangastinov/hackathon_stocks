@@ -36,21 +36,23 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
     if (quantity <= 0)
         throw std::invalid_argument("Invalid quantity");
     else if (price <= 0)
-        throw std::invalid_argument("Invalid quantity");
+        throw std::invalid_argument("Invalid price");
 
 
     if (orderType == SELL) {
-        std::shared_ptr<SellOrder> selltemp = make_shared<SellOrder>(
-                SellOrder(acc.getUserID(), StockID, price, quantity, nextOrderID_Sell++));
-        allMarkets[StockID].addSell(selltemp);
-        acc.addSell(selltemp);
+        std::shared_ptr<SellOrder> sellTemp = make_shared<SellOrder>(SellOrder(acc, StockID, price, quantity, nextOrderID_Sell++));
+        allMarkets[StockID].addSell(sellTemp);
+        acc.addSell(sellTemp);
         if (allMarkets[StockID].checkBuyEmpty() || allMarkets[StockID].getTopBuy().getOrderPrice() < price) {
         } else {
             if (allMarkets[StockID].getTopBuy().getOrderQuantity() == quantity) {
                 executions.emplace_back(
                         Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), quantity,nextExecutionID));
+                Account& tempAcc = allMarkets[StockID].getTopBuy().getAccount();
                 allMarkets[StockID].poppedBuy();
+                tempAcc.updateOrder();
                 allMarkets[StockID].poppedSell();
+                acc.updateOrder();
                 std::cout << executions[nextExecutionID - 1] << std::endl;
                 nextExecutionID++;
             } else if (allMarkets[StockID].getTopBuy().getOrderQuantity() > quantity) {
@@ -58,6 +60,7 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                         Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), quantity,
                                   nextExecutionID));
                 allMarkets[StockID].poppedSell();
+                acc.updateOrder();
                 allMarkets[StockID].getTopBuy().changeOrderQuantity(
                         allMarkets[StockID].getTopBuy().getOrderQuantity() - quantity);
                 std::cout << executions[nextExecutionID - 1] << std::endl;
@@ -67,17 +70,20 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                                                   allMarkets[StockID].getTopBuy().getOrderQuantity(), nextExecutionID));
                 int newqty = quantity - allMarkets[StockID].getTopBuy().getOrderQuantity();
                 allMarkets[StockID].getTopSell().changeOrderQuantity(newqty);
+                Account &tempAcc = allMarkets[StockID].getTopBuy().getAccount();
                 allMarkets[StockID].poppedBuy();
-
+                tempAcc.updateOrder();
                 std::cout << executions[nextExecutionID - 1] << std::endl;
                 nextExecutionID++;
-                while (newqty != 0 && !allMarkets[StockID].checkBuyEmpty() && allMarkets[StockID].getTopSell().getOrderPrice() >= price) {
+                while (newqty != 0 && !allMarkets[StockID].checkBuyEmpty() && allMarkets[StockID].getTopBuy().getOrderPrice() >= price) {
                     if (newqty > allMarkets[StockID].getTopBuy().getOrderQuantity()) {
                         executions.emplace_back(Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(),
                                           allMarkets[StockID].getTopBuy().getOrderQuantity(), nextExecutionID));
                         newqty -= allMarkets[StockID].getTopBuy().getOrderQuantity();
                         allMarkets[StockID].getTopSell().changeOrderQuantity(newqty);
+                        Account &tempAcc2 = allMarkets[StockID].getTopBuy().getAccount();
                         allMarkets[StockID].poppedBuy();
+                        tempAcc2.updateOrder();
                         std::cout << executions[nextExecutionID - 1] << std::endl;
                         nextExecutionID++;
                     } else if (newqty < allMarkets[StockID].getTopBuy().getOrderQuantity()) {
@@ -86,16 +92,20 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                                           nextExecutionID));
                         allMarkets[StockID].getTopBuy().changeOrderQuantity(
                                 allMarkets[StockID].getTopBuy().getOrderQuantity() - newqty);
-                        std::cout << executions[nextExecutionID - 1] << std::endl;
                         allMarkets[StockID].poppedSell();
+                        acc.updateOrder();
+                        std::cout << executions[nextExecutionID - 1] << std::endl;
                         nextExecutionID++;
                         newqty = 0;
                     } else if (newqty == allMarkets[StockID].getTopBuy().getOrderQuantity()) {
                         executions.emplace_back(
                                 Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), newqty,
                                           nextExecutionID));
+                        Account &tempAcc2 = allMarkets[StockID].getTopBuy().getAccount();
                         allMarkets[StockID].poppedBuy();
+                        tempAcc2.updateOrder();
                         allMarkets[StockID].poppedSell();
+                        acc.updateOrder();
                         std::cout << executions[nextExecutionID - 1] << std::endl;
                         nextExecutionID++;
                         newqty = 0;
@@ -105,7 +115,7 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
         }
     } else if (orderType == BUY) {
         std::shared_ptr<BuyOrder> buytemp = make_shared<BuyOrder>(
-                BuyOrder(acc.getUserID(), StockID, price, quantity, nextOrderID_Buy++));
+                BuyOrder(acc, StockID, price, quantity, nextOrderID_Buy++));
         allMarkets[StockID].addBuy(buytemp);
         acc.addBuy(buytemp);
         if (allMarkets[StockID].checkSellEmpty() || allMarkets[StockID].getTopSell().getOrderPrice() > price) {
@@ -115,7 +125,11 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                         Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), quantity,
                                   nextExecutionID));
                 allMarkets[StockID].poppedBuy();
+                acc.updateOrder();
+
+                Account &tempAcc = allMarkets[StockID].getTopSell().getAccount();
                 allMarkets[StockID].poppedSell();
+                tempAcc.updateOrder();
                 std::cout << executions[nextExecutionID - 1] << std::endl;
                 nextExecutionID++;
             } else if (allMarkets[StockID].getTopSell().getOrderQuantity() > quantity) {
@@ -123,6 +137,7 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                         Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), quantity,
                                   nextExecutionID));
                 allMarkets[StockID].poppedBuy();
+                acc.updateOrder();
                 allMarkets[StockID].getTopSell().changeOrderQuantity(
                         allMarkets[StockID].getTopSell().getOrderQuantity() - quantity);
                 std::cout << executions[nextExecutionID - 1] << std::endl;
@@ -133,7 +148,9 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                                                   nextExecutionID));
                 int newqty = quantity - allMarkets[StockID].getTopSell().getOrderQuantity();
                 allMarkets[StockID].getTopBuy().changeOrderQuantity(newqty);
+                Account& tempAcc = allMarkets[StockID].getTopSell().getAccount();
                 allMarkets[StockID].poppedSell();
+                tempAcc.updateOrder();
                 std::cout << executions[nextExecutionID - 1] << std::endl;
                 nextExecutionID++;
                 while (newqty != 0 && allMarkets[StockID].getTopSell().getOrderPrice() <= price) {
@@ -143,17 +160,19 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                                                           nextExecutionID));
                         newqty -= allMarkets[StockID].getTopSell().getOrderQuantity();
                         allMarkets[StockID].getTopBuy().changeOrderQuantity(newqty);
+                        Account &tempAcc2= allMarkets[StockID].getTopSell().getAccount();
                         allMarkets[StockID].poppedSell();
+                        tempAcc2.updateOrder();
                         std::cout << executions[nextExecutionID - 1] << std::endl;
                         nextExecutionID++;
                     } else if (newqty < allMarkets[StockID].getTopSell().getOrderQuantity()) {
                         executions.emplace_back(
                                 Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), newqty,
                                           nextExecutionID));
-                        allMarkets[StockID].getTopSell().changeOrderQuantity(
-                                allMarkets[StockID].getTopSell().getOrderQuantity() - newqty);
-                        std::cout << executions[nextExecutionID - 1] << std::endl;
+                        allMarkets[StockID].getTopSell().changeOrderQuantity(allMarkets[StockID].getTopSell().getOrderQuantity() - newqty);
                         allMarkets[StockID].poppedBuy();
+                        acc.updateOrder();
+                        std::cout << executions[nextExecutionID - 1] << std::endl;
                         nextExecutionID++;
                         newqty = 0;
                     } else if (newqty == allMarkets[StockID].getTopSell().getOrderQuantity()) {
@@ -161,7 +180,10 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                                 Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), newqty,
                                           nextExecutionID));
                         allMarkets[StockID].poppedBuy();
+                        acc.updateOrder();
+                        Account &tempAcc2= allMarkets[StockID].getTopSell().getAccount();
                         allMarkets[StockID].poppedSell();
+                        tempAcc2.updateOrder();
                         std::cout << executions[nextExecutionID - 1] << std::endl;
                         nextExecutionID++;
                         newqty = 0;
