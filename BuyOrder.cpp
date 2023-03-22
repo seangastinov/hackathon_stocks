@@ -5,8 +5,8 @@
 #include "BuyOrder.h"
 
 #include <utility>
-BuyOrder::BuyOrder(Account& acc,const std::string stockID, double orderPrice, int orderQuantity, int orderID)
-        : Order(acc.getUserID(), stockID, orderPrice, orderQuantity, orderID), acc(acc){
+BuyOrder::BuyOrder(Account& acc,std::string stockID, double orderPrice, int orderQuantity, int orderID)
+        : Order(acc.getUserID(), std::move(stockID), orderPrice, orderQuantity, orderID), acc(acc){
 }
 bool BuyOrder::operator<(const Order &rhs) const {
     if (this->orderPrice < rhs.getOrderPrice()){

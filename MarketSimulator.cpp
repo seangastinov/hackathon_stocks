@@ -38,7 +38,6 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
     else if (price <= 0)
         throw std::invalid_argument("Invalid price");
 
-
     if (orderType == SELL) {
         std::shared_ptr<SellOrder> sellTemp = make_shared<SellOrder>(SellOrder(acc, StockID, price, quantity, nextOrderID_Sell++));
         allMarkets[StockID].addSell(sellTemp);

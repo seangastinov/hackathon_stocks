@@ -16,7 +16,7 @@ protected:
     OrderType orderType = def_orderType;
     Account &acc;
 public:
-    BuyOrder(Account &acc,const std::string stockID, double orderPrice, int orderQuantity, int orderID);
+    BuyOrder(Account &acc,std::string stockID, double orderPrice, int orderQuantity, int orderID);
     bool operator<(const Order &rhs) const;
     OrderType getOrderType() override;
     Account& getAccount() const;

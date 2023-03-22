@@ -17,7 +17,7 @@ protected:
 
 public:
     bool operator<(const Order &rhs) const;
-    SellOrder(Account &acc, const std::string& stockID, double orderPrice, int orderQuantity, int orderID);
+    SellOrder(Account &acc, std::string stockID, double orderPrice, int orderQuantity, int orderID);
     OrderType getOrderType() override;
     Account& getAccount() const;
     void print(std::ostream &os) const override;

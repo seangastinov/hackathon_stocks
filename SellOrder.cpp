@@ -5,9 +5,8 @@
 #include "SellOrder.h"
 
 #include <utility>
-SellOrder::SellOrder(Account &acc, const std::string& stockID, double orderPrice, int orderQuantity, int orderID)
-        : Order(acc.getUserID(), stockID, orderPrice, orderQuantity, orderID), acc(acc){
-
+SellOrder::SellOrder(Account &acc, std::string stockID, double orderPrice, int orderQuantity, int orderID)
+        : Order(acc.getUserID(), std::move(stockID), orderPrice, orderQuantity, orderID), acc(acc){
 }
 
 bool SellOrder::operator<(const Order &rhs) const {

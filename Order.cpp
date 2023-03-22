@@ -6,10 +6,10 @@
 
 #include <utility>
 
-Order::Order(Account &acc, std::string stockID, double orderPrice, int orderQuantity, int orderID)
-        :stockID(std::move(stockID)), orderQuantity{orderQuantity}, orderPrice{orderPrice}, acc{acc}, orderID{orderID} {
-    userID= acc.getUserID();
+Order::Order(int userID, std::string stockID, double orderPrice, int orderQuantity, int orderID)
+        :stockID(std::move(stockID)), orderQuantity{orderQuantity}, orderPrice{orderPrice},userID{userID}, orderID{orderID} {
 }
+
 
 
 int Order::getOrderQuantity(){
@@ -31,15 +31,9 @@ void Order::changeOrderQuantity(int newQuantity) {
     orderQuantity = newQuantity;
 }
 
-Account& Order::getAccount() const {
-    return acc;
-}
-
 void Order::print(std::ostream &os) const {
     os.precision(2);
     os << std::fixed;
-    os << "User ID: " << userID << std::endl;
-    os << "Username: " << acc.getUsername() << std::endl;
     os << "Stock ID: " << stockID << std::endl;
     os << "Order Price: " << orderPrice << std::endl;
     os << "Order Quantity: " << orderQuantity << std::endl;
