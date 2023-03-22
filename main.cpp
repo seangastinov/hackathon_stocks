@@ -28,6 +28,6 @@ int main() {
     cout << Moe;
 
     cout << Larry;
-    //...
+    //.....
     return 0;
 }
