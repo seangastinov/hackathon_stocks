@@ -13,19 +13,19 @@ int main() {
     Account Fio(5, "Fio");
 
     marketSimulator.addOrder("AAPL", 100, 80, OrderType::SELL, Sean);
-//    cout << Sean << endl;
-//    marketSimulator.addOrder("AAPL", 5, 90, OrderType::SELL, Joe);
-//    cout << Joe << endl;
-//    marketSimulator.addOrder("AAPL", 30, 100, OrderType::SELL, Moe);
-//    cout << Moe << endl;
-//    marketSimulator.addOrder("AAPL",10 , 40, OrderType::SELL, Larry);
-//    cout << Larry << endl;
+    cout << Sean << endl;
+    marketSimulator.addOrder("AAPL", 5, 90, OrderType::SELL, Joe);
+    cout << Joe << endl;
+    marketSimulator.addOrder("AAPL", 30, 100, OrderType::SELL, Moe);
+    cout << Moe << endl;
+    marketSimulator.addOrder("AAPL",10 , 40, OrderType::SELL, Larry);
+    cout << Larry << endl;
 
     marketSimulator.addOrder("AAPL", 100, 80, OrderType::BUY, Fio);
     cout << Fio;
     cout << Sean;
-//    cout << Joe;
-//    cout << Moe;
+    cout << Joe;
+    cout << Moe;
 
     cout << Larry;
     //.....

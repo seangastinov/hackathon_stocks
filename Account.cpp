@@ -41,7 +41,7 @@ void Account::print(std::ostream &os) const {
             os << "Order ID:"<< buy_order->getOrderID()<< " ";
             os << "Stock ID:" << buy_order->getStockID() << " ";
             os << "Price:"<< buy_order->getOrderPrice() << " ";
-            os << "Quantity:" << buy_order->getOrderQuantity() << " Type:BUY";
+            os << "Quantity:" << buy_order->getOrderQuantity();
             os << std::endl;
         }
     }
@@ -55,7 +55,7 @@ void Account::print(std::ostream &os) const {
             os << "Order ID:"<< sell_order->getOrderID()<< " ";
             os << "Stock ID:" << sell_order->getStockID() << " ";
             os << "Price:" << sell_order->getOrderPrice() << " ";
-            os << "Quantity:"<< sell_order->getOrderQuantity() << " Type:SELL";
+            os << "Quantity:"<< sell_order->getOrderQuantity();
             os << std::endl;
         }
     }

@@ -51,7 +51,6 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                 allMarkets[StockID].poppedBuy();
                 tempAcc.updateOrder();
                 allMarkets[StockID].poppedSell();
-                acc.updateOrder();
                 std::cout << executions[nextExecutionID - 1] << std::endl;
                 nextExecutionID++;
             } else if (allMarkets[StockID].getTopBuy().getOrderQuantity() > quantity) {
@@ -59,7 +58,6 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                         Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), quantity,
                                   nextExecutionID));
                 allMarkets[StockID].poppedSell();
-                acc.updateOrder();
                 allMarkets[StockID].getTopBuy().changeOrderQuantity(
                         allMarkets[StockID].getTopBuy().getOrderQuantity() - quantity);
                 std::cout << executions[nextExecutionID - 1] << std::endl;
@@ -92,7 +90,6 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                         allMarkets[StockID].getTopBuy().changeOrderQuantity(
                                 allMarkets[StockID].getTopBuy().getOrderQuantity() - newqty);
                         allMarkets[StockID].poppedSell();
-                        acc.updateOrder();
                         std::cout << executions[nextExecutionID - 1] << std::endl;
                         nextExecutionID++;
                         newqty = 0;
@@ -104,7 +101,6 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                         allMarkets[StockID].poppedBuy();
                         tempAcc2.updateOrder();
                         allMarkets[StockID].poppedSell();
-                        acc.updateOrder();
                         std::cout << executions[nextExecutionID - 1] << std::endl;
                         nextExecutionID++;
                         newqty = 0;
@@ -124,8 +120,6 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                         Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), quantity,
                                   nextExecutionID));
                 allMarkets[StockID].poppedBuy();
-                acc.updateOrder();
-
                 Account &tempAcc = allMarkets[StockID].getTopSell().getAccount();
                 allMarkets[StockID].poppedSell();
                 tempAcc.updateOrder();
@@ -136,7 +130,6 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                         Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), quantity,
                                   nextExecutionID));
                 allMarkets[StockID].poppedBuy();
-                acc.updateOrder();
                 allMarkets[StockID].getTopSell().changeOrderQuantity(
                         allMarkets[StockID].getTopSell().getOrderQuantity() - quantity);
                 std::cout << executions[nextExecutionID - 1] << std::endl;
@@ -170,7 +163,6 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                                           nextExecutionID));
                         allMarkets[StockID].getTopSell().changeOrderQuantity(allMarkets[StockID].getTopSell().getOrderQuantity() - newqty);
                         allMarkets[StockID].poppedBuy();
-                        acc.updateOrder();
                         std::cout << executions[nextExecutionID - 1] << std::endl;
                         nextExecutionID++;
                         newqty = 0;
@@ -179,7 +171,6 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
                                 Execution(allMarkets[StockID].getTopBuy(), allMarkets[StockID].getTopSell(), newqty,
                                           nextExecutionID));
                         allMarkets[StockID].poppedBuy();
-                        acc.updateOrder();
                         Account &tempAcc2= allMarkets[StockID].getTopSell().getAccount();
                         allMarkets[StockID].poppedSell();
                         tempAcc2.updateOrder();
@@ -191,4 +182,5 @@ void MarketSimulator::addOrder(const std::string &StockID, int quantity, double 
             }
         }
     }
+    acc.updateOrder();
 }
